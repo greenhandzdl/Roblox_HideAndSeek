@@ -10,8 +10,8 @@ end
 
 local toolName = "伪装"
 
-particleEncounterEvent.OnServerEvent:Connect(function(player)
-	print("[调试] 服务器收到ParticleEncounter事件，来自玩家：", player.Name)
+particleEncounterEvent.OnServerEvent:Connect(function(player, particlePart)
+	print("[调试] 服务器收到ParticleEncounter事件，来自玩家：", player.Name, "粒子部件：", particlePart)
 	local character = player.Character
 	if not character then
 		print("[调试] 玩家没有角色，忽略")

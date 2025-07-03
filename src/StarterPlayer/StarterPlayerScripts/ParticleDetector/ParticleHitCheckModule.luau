@@ -41,7 +41,7 @@ local function Start(EmitterRegistry)
 			if particlePart and isInParticleCone(particlePart, hrp, emitterConfig.radius, emitterConfig.angle)
 				and RaycastCheck(particlePart, hrp, nil) then
 				if tick() - lastHit > HIT_COOLDOWN then
-					particleEncounterEvent:FireServer()
+					particleEncounterEvent:FireServer(particlePart)
 					lastHit = tick()
 				end
 				break

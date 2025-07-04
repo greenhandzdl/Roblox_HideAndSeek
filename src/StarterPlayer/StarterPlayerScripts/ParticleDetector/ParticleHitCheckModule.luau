@@ -4,6 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 local particleEncounterEvent = ReplicatedStorage:WaitForChild("ParticleEncounter")
 
+
 local lastHit = 0
 local HIT_COOLDOWN = 1
 
@@ -20,11 +21,21 @@ end
 
 local function RaycastCheck(origin, target, ignoreList)
 	ignoreList = ignoreList or {}
-	local direction = target - origin
 	local raycastParams = RaycastParams.new()
 	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
-	raycastParams.FilterDescendantsInstances = ignoreList
-	local result = workspace:Raycast(origin, direction, raycastParams)
+	-- 用RaycastParams:AddToFilter()方法，直接改FilterDescendantsInstances这个表似乎不好使
+	-- raycastParams.FilterDescendantsInstances += ignoreList
+	raycastParams:AddToFilter(ignoreList)
+	raycastParams:AddToFilter({})
+	raycastParams.IgnoreWater = true
+	raycastParams.CollisionGroup = 'Handle'
+
+	
+	local originPos = origin.Position
+	local deriction = target.Position - originPos
+	local result = workspace:Raycast(originPos, deriction, raycastParams)
+	print(result)
+	print(result.Instance)
 	if result then
 		return false -- 有物体阻挡
 	else

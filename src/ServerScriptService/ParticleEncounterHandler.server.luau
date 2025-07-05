@@ -12,6 +12,8 @@ local toolName = "伪装"
 
 particleEncounterEvent.OnServerEvent:Connect(function(player, particlePart)
 	print("[调试] 服务器收到ParticleEncounter事件，来自玩家：", player.Name, "粒子部件：", particlePart)
+	local NPC = workspace:WaitForChild("场景三"):WaitForChild(particlePart)
+	
 	local character = player.Character
 	if not character then
 		print("[调试] 玩家没有角色，忽略")
@@ -31,5 +33,11 @@ particleEncounterEvent.OnServerEvent:Connect(function(player, particlePart)
 			print("[调试] 玩家未装备伪装，执行死亡")
 			humanoid.Health = 0
 		end
+		
+		local highlight = Instance.new("Highlight")
+		highlight.Parent = NPC
+		task.delay(3,function()
+			highlight:Destroy()
+		end)
 	end
 end) 
